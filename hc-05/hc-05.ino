@@ -1,6 +1,7 @@
 #include "SoftwareSerial.h"    
 SoftwareSerial mySerial(2,3); 
-
+//slave: 22:5:426E
+//master:
 void setup() {
   pinMode(2,INPUT);
   pinMode(3,OUTPUT);
