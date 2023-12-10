@@ -1,23 +1,24 @@
-#include "SoftwareSerial.h"    // подключаем библиотеку
-SoftwareSerial mySerial(2,3);  // указываем пины tx и rx
+#include "SoftwareSerial.h"    
+SoftwareSerial mySerial(2,3); 
 
 void setup() {
   pinMode(2,INPUT);
   pinMode(3,OUTPUT);
   
-  Serial.begin(9600);         // включаем hardware-порт
-  mySerial.begin(38400);  // включаем software-порт
+  Serial.begin(9600);      
+  mySerial.begin(38400);  
   
   Serial.println("start setting");
 }
 
 void loop() {
+  Serial.println(2);
     if (mySerial.available()) {
-        char c = mySerial.read();  // читаем из software-порта
-        Serial.print(c);                   // пишем в hardware-порт
+        char c = mySerial.read();  
+        Serial.print(c);                  
     }
     if (Serial.available()) {
-        char c = Serial.read();      // читаем из hardware-порта
-        mySerial.write(c);            // пишем в software-порт
+        char c = Serial.read();     
+        mySerial.write(c);            
     }
 }
