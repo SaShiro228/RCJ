@@ -1,5 +1,7 @@
 #include "SoftwareSerial.h"    
 SoftwareSerial mySerial(2,3); 
+//RCJ_Slave PSWD-2214 Addr-0022:05:426E VERSION:3.0-20170601
+//RCJ_Master PSWD-2214 VERSION:3.0-20170601
 
 void setup() {
   pinMode(2,INPUT);
@@ -11,14 +13,6 @@ void setup() {
   Serial.println("start setting");
 }
 
-void loop() {
-  Serial.println(2);
-    if (mySerial.available()) {
-        char c = mySerial.read();  
-        Serial.print(c);                  
-    }
-    if (Serial.available()) {
-        char c = Serial.read();     
-        mySerial.write(c);            
-    }
+void loop() { 
+      mySerial.write(1);            
 }
