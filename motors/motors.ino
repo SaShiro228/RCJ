@@ -21,8 +21,12 @@ int counter = 0;  // Счетчик нажатий
 #define PWMD 46
 
 float speed_x = 50;
-float speed_y = 50;
+float speed_y = 50; 
+float speed = 0;
 int k = 1;
+float angel = 90;
+float angel_mv = 0;
+float angel_rad = 0;
 
 void setup(){
   pinMode(AIN1 ,OUTPUT); // Vector1 AD
@@ -45,10 +49,71 @@ void setup(){
   Serial.begin(9600);
 }
 void loop(){ 
-  Serial.print(Button());
-  Serial.print(" // ");
-  Serial.println(Vector_go(Button()));
+  motor_go(50);
 }
+void motor_go(int speed_x){
+  angel_mv = angel + 45;
+  if(angel_mv > 360){
+    angel_mv = angel_mv - 360;
+  }
+  angel_rad = angel * 3.14 /180;
+  if ((angel_mv <= 90) or (angel_mv >= 270)){
+    speed_y = tan(angel_rad) * speed_x;
+    motorY(speed_y);
+    if(angel_mv < 90){
+      motorX(speed_x);
+    }else if(angel_mv > 270){
+      motorX(speed_x);
+    }
+  }else{
+    //speed_x = speed_x * -1;
+    speed_y = tan(angel_rad) * speed_x;
+    motorY(speed_y);
+    if(angel_mv <= 1180){
+      motorX(speed_x);
+    }else if(angel_mv >= 180){
+      motorX(speed_x);
+    }
+    
+  }
+}
+void motorY(float speed){
+  if (speed > 0){
+    analogWrite(PWMB, speed);
+    analogWrite(PWMC, speed);
+    digitalWrite(BIN2, 1);
+    digitalWrite(CIN1, 1);
+    digitalWrite(BIN1, 0);
+    digitalWrite(CIN2, 0);
+  }else if(speed < 0){
+    speed = speed * -1;
+    analogWrite(PWMB, speed);
+    analogWrite(PWMC, speed);
+    digitalWrite(BIN1, 1);
+    digitalWrite(CIN2, 1);
+    digitalWrite(BIN2, 0);
+    digitalWrite(CIN1, 0);
+  }
+}
+void motorX(float speed){
+  if (speed > 0){
+    analogWrite(PWMA, speed);
+    analogWrite(PWMD, speed);
+    digitalWrite(AIN1, 1);
+    digitalWrite(DIN1, 1);
+    digitalWrite(AIN2, 0);
+    digitalWrite(DIN2, 0);
+  }else if(speed < 0){
+    speed = speed * -1;
+    analogWrite(PWMA, speed);
+    analogWrite(PWMD, speed);
+    digitalWrite(AIN2, 1);
+    digitalWrite(DIN2, 1);
+    digitalWrite(AIN1, 0);
+    digitalWrite(DIN1, 0);
+  }
+}
+
 void go(){
   digitalWrite(AIN2, 1);
   digitalWrite(CIN2, 1);
@@ -60,24 +125,4 @@ void go(){
   analogWrite(PWMD, speed_x * k);
 }
 
-void right(){
-  digitalWrite(AIN1, 1);
-  digitalWrite(CIN1, 1);
-  digitalWrite(DIN1, 1);
-  digitalWrite(BIN1, 1);
-  analogWrite(PWMA, speed_x);
-  analogWrite(PWMB, speed_x);
-  analogWrite(PWMC, speed_x);
-  analogWrite(PWMD, speed_x);
-}
 
-void left(){
-  digitalWrite(AIN2, 1);
-  digitalWrite(CIN2, 1);
-  digitalWrite(DIN2, 1);
-  digitalWrite(BIN2, 1);
-  analogWrite(PWMA, speed_x);
-  analogWrite(PWMB, speed_x);
-  analogWrite(PWMC, speed_x);
-  analogWrite(PWMD, speed_x);
-}
