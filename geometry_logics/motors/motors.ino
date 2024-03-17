@@ -20,8 +20,8 @@ int counter = 0;  // Счетчик нажатий
 #define PWMC 7
 #define PWMD 46
 
-float speed_x = 50;
-float speed_y = 50;
+float speed_x = 100;
+float speed_y = 100;
 int k = 1;
 
 void setup(){
@@ -45,9 +45,7 @@ void setup(){
   Serial.begin(9600);
 }
 void loop(){ 
-  Serial.print(Button());
-  Serial.print(" // ");
-  Serial.println(Vector_go(Button()));
+  go();
 }
 void go(){
   digitalWrite(AIN2, 1);

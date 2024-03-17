@@ -70,11 +70,12 @@ void loop() {
   byte intencity = 0;
   bool data = false;
   data = getData(&direction, &intencity);
-  if( (intencity >= S && direction <= 70 && direction >= 290) or (intencity >= S && direction <= 200 && direction >= 160)){
-    camGO(cam());
-  }else{
-    motor_ball();
-  }
+  // if( (intencity >= S && direction <= 70 && direction >= 290) or (intencity >= S && direction <= 200 && direction >= 160)){
+  //   camGO(cam());
+  // }else{
+  //   motor_ball();
+  // }
+  motor_ball();
   //camGO(cam());
   Serial.print(direction);
   Serial.print(" // ");
