@@ -13,7 +13,7 @@
 #define PWMD 46
 
 
-void Vector_x(int power){
+void Vector_x(float power){
   if (power > 0)
   {
     digitalWrite(AIN2, 1);
@@ -39,7 +39,7 @@ void Vector_x(int power){
   analogWrite(PWMA, power);
   analogWrite(PWMD, power);
 }
-void Vector_y(int power){
+void Vector_y(float power){
   if (power > 0)
   {
     digitalWrite(CIN2, 1);
