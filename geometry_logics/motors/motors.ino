@@ -35,7 +35,6 @@ void setup(){
 }
 void loop(){ 
   isIRBallFound = getData(&direction, &intencity);
-  direction = 0;
   Serial.println(motor_drive_on_vector(direction));
   motor_drive_on_vector(direction);
 }
