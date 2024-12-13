@@ -61,6 +61,7 @@ bool IRLocatorInit() {
 }
 
 bool getData(word *direction, byte *intencity) { 
+
   *direction = readReg(ANGLE_1200_REG);
   if (*direction != 0xFF) {
     *intencity = readReg(INTENCITY_1200_REG);
@@ -73,6 +74,30 @@ bool getData(word *direction, byte *intencity) {
     
     *intencity = readReg(INTENCITY_600_REG);
   }
+
+  *direction *= 5;
+  return true;
+}
+
+bool _getData(word *direction, byte *intencity) { 
+  *intencity = readReg(INTENCITY_1200_REG);
+  if (*intencity > 100){
+     *direction = readReg(ANGLE_600_REG);
+  } else{
+    *direction = readReg(ANGLE_1200_REG);
+  }
+  // *direction = readReg(ANGLE_1200_REG);
+  // if (*direction != 0xFF) {
+  //   *intencity = readReg(INTENCITY_1200_REG);
+  // } else {
+  //   // Try to read from another channel
+  //   *direction = readReg(ANGLE_600_REG);
+  //   if (*direction == 0xFF) {
+  //     return false;
+  //   }    
+    
+  //   *intencity = readReg(INTENCITY_600_REG);
+  // }
 
   *direction *= 5;
   return true;

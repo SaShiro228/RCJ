@@ -1,14 +1,22 @@
 #include <Wire.h>
 #include "motor.h"
 #include "locator.h"
+//#include "lines.h"
+//#include "cam.h"
 
 bool isIRBallFound = false;
 word direction = 0;
-int y, x = 100;
 byte intencity = 0;
 bool getData(word *direction, byte *intencity);
 
 void setup(){
+  // pinMode(s0, OUTPUT); 
+  // pinMode(s1, OUTPUT); 
+  // pinMode(s2, OUTPUT); 
+  // pinMode(s3, OUTPUT); 
+  // pinMode(button1Pin, INPUT_PULLUP);
+  // pinMode(button2Pin, INPUT_PULLUP);
+    
   pinMode(AIN1 ,OUTPUT); // Vector1 AD
   pinMode(AIN2 ,OUTPUT);
 
@@ -34,22 +42,12 @@ void setup(){
   while (!IRLocatorInit());
 }
 void loop(){ 
-  isIRBallFound = getData(&direction, &intencity);
-  Serial.println(motor_drive_on_vector(direction));
-  motor_drive_on_vector(direction);
+  isIRBallFound = _getData(&direction, &intencity);
+  // Serial.print(intencity);
+  // Serial.print(" ");
+  // Serial.println(direction);
+  //motor_drive_on_vector(100, direction);
+   Vector_x(150);
+   Vector_y(150);
 }
 
-int motor_drive_on_vector(int angle){
-  angle += 45;
-  if (angle > 360){
-    angle = angle - 360;
-  }
-  y = tan(angle * 3.14 / 180) * x;
-  if (angle > 180){
-    x = -x;
-    y = tan(angle * 3.14 / 180) * x;
-  }
-  Vector_x(x);
-  Vector_y(y);
-  return y;
-}

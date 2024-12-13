@@ -12,6 +12,7 @@
 #define PWMC 7
 #define PWMD 46
 
+int y, x = 100;
 
 void Vector_x(float power){
   if (power > 0)
@@ -39,6 +40,7 @@ void Vector_x(float power){
   analogWrite(PWMA, power);
   analogWrite(PWMD, power);
 }
+
 void Vector_y(float power){
   if (power > 0)
   {
@@ -64,4 +66,15 @@ void Vector_y(float power){
   }
   analogWrite(PWMB, power);
   analogWrite(PWMC, power);
+}
+
+void motor_drive_on_vector(int power, int angle){
+  angle += 45;
+  if (angle > 360){
+    angle = angle - 360;
+  }
+  x = power * cos(angle * 3.14 / 180);
+  y = power * sin(angle * 3.14 / 180);
+  Vector_x(x);
+  Vector_y(y);
 }
