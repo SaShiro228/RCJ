@@ -46,8 +46,8 @@ void loop(){
   // Serial.print(intencity);
   // Serial.print(" ");
   // Serial.println(direction);
-  //motor_drive_on_vector(100, direction);
-   Vector_x(150);
-   Vector_y(150);
+  motor_drive_on_vector(100, direction);
+   //Vector_x(150);
+   //Vector_y(150);
 }
 
