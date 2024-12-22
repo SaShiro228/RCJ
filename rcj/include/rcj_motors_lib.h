@@ -2,8 +2,9 @@
 #include <Arduino.h>
 #include "const.h"
 
-
-void Vector_x(float power){
+class rcj_motors_lib{
+private:
+  void Vector_x(float power){
   if (power > 0)
   {
     digitalWrite(AIN2, 1);
@@ -28,9 +29,9 @@ void Vector_x(float power){
   }
   analogWrite(PWMA, power);
   analogWrite(PWMD, power);
-}
+  }
 
-void Vector_y(float power){
+  void Vector_y(float power){
   if (power > 0)
   {
     digitalWrite(CIN2, 1);
@@ -55,13 +56,15 @@ void Vector_y(float power){
   }
   analogWrite(PWMB, power);
   analogWrite(PWMC, power);
-}
-
-void motor_drive_on_vector(int power, int angle){
-  angle += 45;
-  if (angle > 360){
-    angle = angle - 360;
   }
-  Vector_x(power * cos(angle * 3.14 / 180));
-  Vector_y(power * sin(angle * 3.14 / 180));
-}
+public:
+  void motor_drive_on_vector(int power, int angle){
+    angle += 45;
+    if (angle > 360){
+      angle = angle - 360;
+    }
+    Vector_x(power * cos(angle * 3.14 / 180));
+    Vector_y(power * sin(angle * 3.14 / 180));
+  }
+};
+

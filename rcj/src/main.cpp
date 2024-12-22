@@ -5,10 +5,12 @@
 #include "rcj_sensors_lib.h"
 #include "const.h"
 
-bool isIRBallFound = false;
-word direction = 0;
-byte intencity = 0;
-bool getData(word *direction, byte *intencity);
+
+
+IR_locator locator;
+line_sensors line;
+rcj_motors_lib motors;
+gyro mp;
 
 void setup(){
   //sensors setup
@@ -37,16 +39,12 @@ void setup(){
   
   //Serial setup
   Serial.begin(9600);
-  Wire.begin();
-  while (!IR_locator.IRLocatorInit());
+  while (!locator.IRLocatorInit());
+  while(!mp.mpuInit());
 }
 void loop(){ 
-  isIRBallFound = IR_locator.getData(&direction, &intencity);
-  // Serial.print(intencity);
-  // Serial.print(" ");
-  // Serial.println(direction);
-  motor_drive_on_vector(100, direction);
-   //Vector_x(150);
-   //Vector_y(150);
+  motors.motor_drive_on_vector(100, locator.get_Derection_Auto());
+  line.readline();
+  Serial.println(line.data[1]);
 }
 

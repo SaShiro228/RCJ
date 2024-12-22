@@ -36,3 +36,5 @@
 //Buttons control pins
 #define Button1Pin 14
 #define Button2Pin 15
+
+#define LINE_channel 8
