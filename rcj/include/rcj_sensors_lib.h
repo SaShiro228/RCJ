@@ -3,6 +3,12 @@
 #include <Wire.h>
 #include "const.h"
 #include "MPU6050.h"
+#include "bufer.h"
+
+queue_t queue;
+
+queue.buffer = malloc(16);
+
 
 class IR_locator{
 private:
@@ -84,35 +90,26 @@ public:
 
 };
 
+
 class line_sensors{
 private:
-  int controlPin[4] = {s0, s1, s2, s3};
-  int muxChannell[LINE_channel][4] = {
-   {0,0,0,0}, //channel 0 1
-   {0,1,0,0}, //channel 2 1
-   {0,0,1,0}, //channel 4 1
-   {0,1,1,0}, //channel 6 1
+  int controlPin[3] = {s1, s2, s3};
+  int muxChannell[LINE_channel][3] = {
+   {0,0,0}, //channel 0 1
+   {0,1,0}, //channel 2 1
+   {0,0,1}, //channel 4 1
+   {0,1,1}, //channel 6 1
 
-   {1,0,0,0}, //channel 1 2
-   {1,1,0,0}, //channel 3 2
-   {1,0,1,0}, //channel 5 2
-   {1,1,1,0}, //channel 7 2
-
-  //  {0,0,0,1}, //channel 8 3
-  //  {0,1,0,1}, //channel 10 3
-  //  {0,0,1,1}, //channel 12 3
-  //  {0,1,1,1}, //channel 14 3
-
-  //  {1,0,0,1}, //channel 9 4
-  //  {1,1,0,1}, //channel 11 4
-  //  {1,0,1,1}, //channel 13 4
-  //  {1,1,1,1}  //channel 15 4
+   {1,0,0}, //channel 1 2
+   {1,1,0}, //channel 3 2
+   {1,0,1}, //channel 5 2
+   {1,1,1}, //channel 7 2
   };
 public:
   int data[LINE_channel];
   int read_line_channel(int channel){
     //loop through the 4 sig
-    for(int i = 0; i < 4; i ++){
+    for(int i = 0; i < 3; i ++){
       digitalWrite(controlPin[i], muxChannell[channel][i]);
     }
     //read the value at the SIG pin
@@ -128,11 +125,6 @@ public:
   }
 };
 
-// class cam{
-// public:
-
-// };
-
 class gyro{
 private:
   MPU6050 mpu;
@@ -145,3 +137,14 @@ public:
   }
 
 };
+
+
+// class IR_Board{
+// public:
+
+// };
+
+// class cam{
+// public:
+
+// };
